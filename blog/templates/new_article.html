@@ -1,0 +1,7 @@
+{% extends "base.html" %} {% block body %}
+<div>
+  <h1>Titulo: {{ new_article.title }}</h1>
+  <p>Contenido: {{ new_article.content }}</p>
+  <p>Autor: {{ new_article.author }} - {{ new_article.creation_date }}</p>
+</div>
+{% endblock %}
