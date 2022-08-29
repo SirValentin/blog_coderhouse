@@ -1,11 +1,31 @@
 {% extends "base.html" %} {% block body %}
- 
-
-<form action="" method="POST">
+<form class="" action="" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  <table>
-    {{form.as_table}}
-  </table>
-  <p><input type="submit" value="Crear articulo"></p>
+  <div class="form-group">
+    <label for="inputTitle">Titulo</label>
+    <input
+      type="text"
+      name="title"
+      class="form-control"
+      id="inputTitle"
+      aria-describedby="title"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="inputContent">Contenido</label>
+    <textarea
+      class="form-control"
+      id="inputContent"
+      name="content"
+      required
+    ></textarea>
+  </div>
+  <div class="">
+    <div class="">
+      <input type="file" class="" id="input_image" name="image" required />
+      <label class="" for="input_image"></label>
+    </div>
+  </div>
+  <input class="btn btn-primary my-3" type="submit" value="Crear articulo" />
 </form>
 {% endblock %}
