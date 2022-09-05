@@ -71,12 +71,23 @@
         </div>
         <div class="d-flex align-items-center">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item active d-flex">
               <p class="p-2 m-0">{{ request.user.username }}</p>
+              <div style="width: 40px; height: 40px">
+                {% if not user.is_superuser and request.user.profile.image %}
+                <img
+                  src="{{ request.user.profile.image.url }}"
+                  class="avatar img-circle img-thumbnail"
+                  alt="avatar"
+                />
+                {% endif %}
+              </div>
             </li>
+            {% if not user.is_superuser %}
             <li class="nav-item active">
-              <a class="nav-link" href="">Mi Perfil</a>
+              <a class="nav-link" href="/users/profile/">Mi Perfil</a>
             </li>
+            {% endif %}
             <li class="nav-item active">
               <a class="nav-link" href="/users/logout/">Cerrar Sesion</a>
             </li>
@@ -93,7 +104,11 @@
           {% block body %} {% endblock %}
         </div>
         {% if request.path == '/blog/list-article/' %}
-        <div class="w-25">Publicidad</div>
+        <div class="w-25">
+          {% for ad_item in ad %}
+          <img src="{{ad_item.image.url}}" alt="" class="w-100" />
+          {% endfor %}
+        </div>
         {% endif %}
       </div>
     </div>

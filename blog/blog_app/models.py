@@ -17,3 +17,7 @@ class Advertising(models.Model):
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
+    image = models.ImageField(upload_to='advertising/', null=True, blank=True)
+
+    def __str__(self):
+        return self.title

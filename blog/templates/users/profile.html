@@ -1,0 +1,134 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container bootstrap snippet mt-4">
+  <div class="row">
+    <div class="col-sm-10">
+      <h1>{{ usuario.username }}</h1>
+      <p>{{ usuario.email }}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="text-center">
+        {% if usuario.profile.image %}
+        <img
+          src="{{ usuario.profile.image.url }}"
+          class="avatar img-circle img-thumbnail"
+          alt="avatar"
+        />
+        {% else %}
+        <img
+          src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          class="avatar img-circle img-thumbnail"
+          alt="avatar"
+        />
+        {% endif %}
+      </div>
+      <div class="panel panel-default my-3">
+        <h5 class="panel-heading">Descripción</h5>
+        <div class="panel-heading">
+          Se unió en {{ usuario.profile.creation_date }}
+        </div>
+        <div class="panel-body">
+          <p>{{ usuario.profile.description }}</p>
+        </div>
+      </div>
+
+      <ul class="list-group">
+        <li class="list-group-item text-muted">
+          Activity <i class="fa fa-dashboard fa-1x"></i>
+        </li>
+        <li class="list-group-item text-right">
+          <span class="pull-left"><strong>Posts</strong></span> {{posts}}
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9">
+      <div class="tab-content">
+        <div class="tab-pane active">
+          <form class="form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <div class="col-xs-6">
+                <label for="first_name"><h4>Nombre</h4></label>
+                <input
+                  type="text"
+                  value="{{usuario.first_name}}"
+                  class="form-control"
+                  name="first_name"
+                  id="first_name"
+                  placeholder="Nombre"
+                  title="enter your first name if any."
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-6">
+                <label for="last_name"><h4>Apellido</h4></label>
+                <input
+                  type="text"
+                  value="{{usuario.last_name}}"
+                  class="form-control"
+                  name="last_name"
+                  id="last_name"
+                  placeholder="Apellido"
+                  title="enter your last name if any."
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-xs-6">
+                <label for="description"><h4>Descripcion</h4></label>
+                <input
+                  type="text"
+                  value="{{usuario.profile.description}}"
+                  class="form-control"
+                  name="description"
+                  id="description"
+                  placeholder="Descripcion"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-6">
+                <label for="email"><h4>Email</h4></label>
+                <input
+                  type="email"
+                  value="{{usuario.email}}"
+                  class="form-control"
+                  name="email"
+                  id="email"
+                  placeholder="you@email.com"
+                  title="enter your email."
+                />
+              </div>
+            </div>
+            <div>
+              <label for="image"><h4>Avatar</h4></label>
+              <input
+                type="file"
+                name="image"
+                id="image"
+                class="text-center center-block file-upload w-100"
+              />
+            </div>
+            <p>{{ error }}</p>
+            <div class="form-group">
+              <div class="col-xs-12">
+                <br />
+                <button class="btn btn-lg btn-success" type="submit">
+                  <i class="glyphicon glyphicon-ok-sign"></i> Guardar
+                </button>
+                <button class="btn btn-lg" type="reset">
+                  <i class="glyphicon glyphicon-repeat"></i> Restablecer
+                </button>
+              </div>
+            </div>
+          </form>
+          <hr />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

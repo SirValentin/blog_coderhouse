@@ -32,13 +32,14 @@ def create_article(request):
 def create_ad(request):
     if request.user.is_superuser:
         if request.method == 'POST':
-            form = FormAd(request.POST)
-
+            form = FormAd(request.POST, request.FILES)
+            print(request.FILES)
             if form.is_valid():
                 Advertising.objects.create(
                     company = form.cleaned_data['company'],
                     title = form.cleaned_data['title'],
-                    description = form.cleaned_data['description']
+                    description = form.cleaned_data['description'],
+                    image = form.cleaned_data['image']
                 )
 
                 return redirect (list_article)
@@ -71,9 +72,9 @@ def create_ad(request):
 def list_article(request):
     articles = Article.objects.all()
     context = {
-        'articles':articles
+        'articles':articles,
+        'ad': Advertising.objects.all()
     }
-    print(context)
     return render(request, 'list_article.html', context=context)
 
 # @login_required
