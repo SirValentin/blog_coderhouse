@@ -1,13 +1,17 @@
 
 from turtle import title
 from django.shortcuts import render, redirect
-from blog_app.forms import FormArticle, FormAd
+from blog_app.forms import FormArticle, FormAd, FormComent
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from blog_app.models import Article, Advertising
+from blog_app.models import Article, Advertising, Coment
 from django.contrib.auth.models import User
 from users.models import User_profile
 
+@login_required
+def About(request):
+     return render(request, 'about.html', context={} )
+    
 @login_required
 def create_article(request):
     
@@ -59,9 +63,21 @@ def delete_article(request, pk):
 def see_article(request, pk):
     if request.method == 'GET':
         article = Article.objects.get(pk=pk)
-        context = {'article':article}
+        coments = Coment.objects.filter(article=article)
+        context = {'article':article, 'coments':coments}
         return render(request, 'article.html', context=context)
+    if request.method == 'POST':
+        form = FormComent(request.POST)
+        
+        if form.is_valid():
+            Coment.objects.create(
+                text = form.cleaned_data['text'],
+                article = Article.objects.get(pk=pk),
+                user = User.objects.get(id=request.user.id)
+            )
 
+            return redirect (f'/blog/see-article/{pk}')
+        
 
 @login_required
 def list_article(request):

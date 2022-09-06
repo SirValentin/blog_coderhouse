@@ -21,3 +21,11 @@ class Advertising(models.Model):
 
     def __str__(self):
         return self.title
+
+class Coment(models.Model):
+    user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
+    article = models.ForeignKey('Article', on_delete=models.CASCADE)
+    text = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.text

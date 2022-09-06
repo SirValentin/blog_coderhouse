@@ -16,7 +16,26 @@
     <p class="blockquote-footer">Publicado por {{ article.author }}</p>
     {% if request.user.id == article.author.id %}
     <a href="{% url 'delete_article' article.id %}">Borrar articulo</a>
-    {% endif %}
+  </div>
+  {% endif %}
+  <div class="card-footer">
+    <form action="" method="POST" class="d-flex">
+      {% csrf_token %}
+      <input
+        type="text"
+        name="text"
+        class="form-control"
+        id="inputTitle"
+        aria-describedby="title"
+        placeholder="Escribe un comentario"
+      />
+      <input class="btn btn-primary" type="submit" value="Enviar" />
+    </form>
   </div>
 </div>
-{% endblock %}
+{% for coment in coments %}
+<div class="card">
+  <div class="card-body">{{ coment }}</div>
+  <p class="blockquote-footer">{{ coment.user }}</p>
+</div>
+{% endfor %} {% endblock %}

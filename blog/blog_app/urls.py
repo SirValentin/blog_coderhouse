@@ -1,5 +1,5 @@
 from django.urls import path
-from blog_app.views import create_article, list_article, create_ad, search_articles, delete_article, see_article
+from blog_app.views import create_article, list_article, create_ad, search_articles, delete_article, see_article, About
 
 urlpatterns = [
     path('create-article/', create_article, name="create_article"),
@@ -8,5 +8,6 @@ urlpatterns = [
     path('create-ad/', create_ad, name='Advertising'),
     path('search-article/', search_articles, name="search"),
     path('delete-article/<int:pk>/', delete_article, name='delete_article'),
-    path('see-article/<int:pk>/', see_article, name='see_article')
+    path('see-article/<int:pk>/', see_article, name='see_article'),
+    path('About/', About, name='ABOUT')
 ]

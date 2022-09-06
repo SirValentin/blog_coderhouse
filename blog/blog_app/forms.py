@@ -16,3 +16,10 @@ class FormAd(forms.Form):
         model = Advertising
         fields = ('company', 'title', 'description', 'image')
         help_texts = {k:'' for k in fields}
+
+class FormComent(forms.Form):
+    text = forms.CharField(max_length=100)
+    class Meta:
+        model = Advertising
+        fields = ('text')
+        help_texts = {k:'' for k in fields}
