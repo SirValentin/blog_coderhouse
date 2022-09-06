@@ -1,0 +1,55 @@
+{% extends 'base.html' %} {% block body%}
+
+
+
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+          Sobre nosotros
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+        <div class="accordion-body">
+          <strong>Somos un blog creado para la comunidad, donde podras encontrar desde noticias 
+            hasta debates polemicos sobre cosas que pasan en el mundo. Queremos un lugar sano donde puedas expresarte!</strong> 
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+          Contacto
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+        <div class="accordion-body">
+            <ul class="list-group">
+                <li class="list-group-item">Numero de telefono:+57 3505195162</li>
+                <li class="list-group-item">Email: blogcoderhouse@blog.com</li>
+                <li class="list-group-item">Direccion: Menlo Park, California, Estados Unidos</li>
+              </ul>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+          Servicios que proporcionamos
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+        <div class="accordion-body">
+            <ul class="list-group">
+                <li class="list-group-item">  Te proporcionamos una experiencia personalizada.</li>
+                <li class="list-group-item">Te conectamos con las personas y organizaciones que te interesan.</li>
+                <li class="list-group-item">Te brindamos herramientas para expresarte y hablar sobre temas que son importantes para ti.</li>
+                <li class="list-group-item"> Te ayudamos a descubrir contenido, productos y servicios que pueden interesarte.</li>
+                <li class="list-group-item">    Promovemos la seguridad, la protección y la integridad de nuestros servicios; combatimos los comportamientos perjudiciales y protegemos a nuestra comunidad de usuarios.</li>
+              </ul>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+  {% endblock %}

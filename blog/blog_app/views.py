@@ -1,12 +1,67 @@
 
 from turtle import title
-from django.shortcuts import render, redirect
+from xml.etree.ElementTree import Comment
+from django.shortcuts import render, redirect, get_object_or_404
 from blog_app.forms import FormArticle, FormAd
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from blog_app.models import Article, Advertising
 from django.contrib.auth.models import User
 from users.models import User_profile
+from django.contrib.contenttypes.models import ContentType
+from .forms import FormComentarios
+from .models import Coment
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib import messages
+
+
+def About(request):
+     return render(request, 'about.html', context={} )
+
+
+def Coment_id(request, pk):
+
+    instance = get_object_or_404(Coment, pk=pk)
+
+    context = {
+        "comentario": instance
+    }
+    return render (request, 'Coments/instance.html', context)
+
+def article_id(request, pk):
+    instance = get_object_or_404(Article, pk=pk)
+
+    inicializar_datos = {
+        "content_type" : instance.get_content_type,
+        "object_id": instance.id
+    }
+
+    form = FormComentarios(request.POST or None, initial = inicializar_datos)
+    
+    if form.is_valid():
+        models = form.cleaned_data.get("content_type")
+        content_type = ContentType.objects.get(model=models)
+        obj_id = form.cleaned_data.get("object_id")
+        text_data = form.cleandes_data.get("text")
+
+        comentarios = Coment.objects.get_or_create(
+
+            user = request.user,
+            content_type = content_type,
+            object_id = obj_id,
+            text = text_data
+        )
+        
+        return HttpResponseRedirect(comentarios.content_object.get_absolute_url())
+
+     
+        
+    context = {
+        'form':form,
+        'instance':instance
+    }
+         
+    return render(request, 'Coments/coments.html', context)
 
 @login_required
 def create_article(request):
@@ -91,5 +146,7 @@ def search_articles (request):
       context = {'articles': articles}
       print(articles)
       return render(request, 'search_article.html', context=context )
+
+
 
 

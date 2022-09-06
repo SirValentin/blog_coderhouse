@@ -15,3 +15,8 @@ class FormAd(forms.Form):
     company = forms.CharField(max_length=20)
     title = forms.CharField(max_length=30)
     description = forms.CharField(max_length=100)
+
+class FormComentarios(forms.Form):
+    content_type = forms.CharField(widget=forms.HiddenInput)
+    object_id = forms.IntegerField(widget= forms.HiddenInput)
+    text = forms.CharField(widget=forms.Textarea)

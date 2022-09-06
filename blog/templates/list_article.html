@@ -14,8 +14,10 @@
     <h5 class="card-title">{{ article.title }}</h5>
     <p class="card-text">{{ article.content }}</p>
     <p class="blockquote-footer">Publicado por {{ article.author }}</p>
+    <button><a href="{% url 'article_id' article.pk %}">Comentar</a></button>
+    
     <a href="#" class="card-link">Ver Articulo</a>
     <!-- <a href="#" class="card-link">Another link</a> -->
-  </div>
+  </div>a href="{% url 'post_idd' post.pk %}"
 </div>
 {% endfor %} {% endblock %}
