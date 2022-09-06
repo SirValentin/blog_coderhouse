@@ -49,24 +49,19 @@ def create_ad(request):
             return render(request, 'new_ad.html', context=context)
     return redirect('/blog/list-article/')
 
-# @login_required
-# def create_author(request):
-    
-#     if request.method == 'POST':
-#         form = FormAuthor(request.POST)
+@login_required
+def delete_article(request, pk):
+    article = Article.objects.get(pk=pk)
+    article.delete()
+    return redirect('/blog/list-article/')
 
-#         if form.is_valid():
-#             Author.objects.create(
-#                 name = form.cleaned_data['name'],
-#                 email = form.cleaned_data['email'],
-#                 description = form.cleaned_data['description']
-#             )
+@login_required
+def see_article(request, pk):
+    if request.method == 'GET':
+        article = Article.objects.get(pk=pk)
+        context = {'article':article}
+        return render(request, 'article.html', context=context)
 
-#             return redirect (list_author)
-#     elif request.method == 'GET':
-#         form = FormAuthor()
-#         context = {'form':form}
-#         return render(request, 'new_author.html', context=context)        
 
 @login_required
 def list_article(request):
@@ -76,14 +71,6 @@ def list_article(request):
         'ad': Advertising.objects.all()
     }
     return render(request, 'list_article.html', context=context)
-
-# @login_required
-# def list_author(request):
-#     authors = Author.objects.all()
-#     context = {
-#         'authors':authors
-#     }
-#     return render(request, 'list_author.html', context=context)
 
 @login_required
 def search_articles (request):
