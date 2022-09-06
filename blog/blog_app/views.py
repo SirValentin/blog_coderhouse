@@ -1,13 +1,17 @@
 
 from turtle import title
 from django.shortcuts import render, redirect
-from blog_app.forms import FormArticle, FormAd
+from blog_app.forms import FormArticle, FormAd, FormComent
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from blog_app.models import Article, Advertising
+from blog_app.models import Article, Advertising, Coment
 from django.contrib.auth.models import User
 from users.models import User_profile
 
+@login_required
+def About(request):
+     return render(request, 'about.html', context={} )
+    
 @login_required
 def create_article(request):
     
@@ -32,13 +36,14 @@ def create_article(request):
 def create_ad(request):
     if request.user.is_superuser:
         if request.method == 'POST':
-            form = FormAd(request.POST)
-
+            form = FormAd(request.POST, request.FILES)
+            print(request.FILES)
             if form.is_valid():
                 Advertising.objects.create(
                     company = form.cleaned_data['company'],
                     title = form.cleaned_data['title'],
-                    description = form.cleaned_data['description']
+                    description = form.cleaned_data['description'],
+                    image = form.cleaned_data['image']
                 )
 
                 return redirect (list_article)
@@ -48,41 +53,40 @@ def create_ad(request):
             return render(request, 'new_ad.html', context=context)
     return redirect('/blog/list-article/')
 
-# @login_required
-# def create_author(request):
-    
-#     if request.method == 'POST':
-#         form = FormAuthor(request.POST)
+@login_required
+def delete_article(request, pk):
+    article = Article.objects.get(pk=pk)
+    article.delete()
+    return redirect('/blog/list-article/')
 
-#         if form.is_valid():
-#             Author.objects.create(
-#                 name = form.cleaned_data['name'],
-#                 email = form.cleaned_data['email'],
-#                 description = form.cleaned_data['description']
-#             )
+@login_required
+def see_article(request, pk):
+    if request.method == 'GET':
+        article = Article.objects.get(pk=pk)
+        coments = Coment.objects.filter(article=article)
+        context = {'article':article, 'coments':coments}
+        return render(request, 'article.html', context=context)
+    if request.method == 'POST':
+        form = FormComent(request.POST)
+        
+        if form.is_valid():
+            Coment.objects.create(
+                text = form.cleaned_data['text'],
+                article = Article.objects.get(pk=pk),
+                user = User.objects.get(id=request.user.id)
+            )
 
-#             return redirect (list_author)
-#     elif request.method == 'GET':
-#         form = FormAuthor()
-#         context = {'form':form}
-#         return render(request, 'new_author.html', context=context)        
+            return redirect (f'/blog/see-article/{pk}')
+        
 
 @login_required
 def list_article(request):
     articles = Article.objects.all()
     context = {
-        'articles':articles
+        'articles':articles,
+        'ad': Advertising.objects.all()
     }
-    print(context)
     return render(request, 'list_article.html', context=context)
-
-# @login_required
-# def list_author(request):
-#     authors = Author.objects.all()
-#     context = {
-#         'authors':authors
-#     }
-#     return render(request, 'list_author.html', context=context)
 
 @login_required
 def search_articles (request):

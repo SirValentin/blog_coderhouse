@@ -17,3 +17,15 @@ class Advertising(models.Model):
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
+    image = models.ImageField(upload_to='advertising/', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+class Coment(models.Model):
+    user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
+    article = models.ForeignKey('Article', on_delete=models.CASCADE)
+    text = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.text
